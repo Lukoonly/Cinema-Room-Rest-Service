@@ -1,20 +1,9 @@
-package CinemaRoomRestService.RestService;
+package CinemaRoomRestService.RestService.api.dto;
 
-public class Seat {
+public class SeatDTO {
     private int row;
     private int column;
     private int price;
-    boolean isSeatFree;
-
-    public Seat(int row, int column) {
-        this.row = row;
-        this.column = column;
-        this.price = row <= 4 ? 10 : 8;
-        this.isSeatFree = true;
-    }
-
-    public Seat() {
-    }
 
     public int getRow() {
         return row;

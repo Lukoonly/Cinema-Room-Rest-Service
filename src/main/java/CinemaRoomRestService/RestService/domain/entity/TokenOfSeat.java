@@ -1,10 +1,10 @@
-package CinemaRoomRestService.RestService;
+package CinemaRoomRestService.RestService.domain.entity;
 
 import java.util.UUID;
 
 public class TokenOfSeat {
-    String token;
-    Seat ticket;
+    private String token;
+    private Seat ticket;
 
     public TokenOfSeat() {
     }
@@ -16,10 +16,6 @@ public class TokenOfSeat {
 
     public String getToken() {
         return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public Seat getTicket() {
