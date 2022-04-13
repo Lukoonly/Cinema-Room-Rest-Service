@@ -1,10 +1,10 @@
-package CinemaRoomRestService.RestService.api.validator;
+package CinemaRoomRestService.RestService.api.controller;
 
 import CinemaRoomRestService.RestService.domain.entity.Statistics;
 import CinemaRoomRestService.RestService.api.dto.CinemaRoomDTO;
 import CinemaRoomRestService.RestService.api.dto.SeatDTO;
 import CinemaRoomRestService.RestService.api.dto.TokenOfSeatDTO;
-import CinemaRoomRestService.RestService.api.mapper.Mapper;
+import CinemaRoomRestService.RestService.api.mapper.SeatMapper;
 import CinemaRoomRestService.RestService.service.BookingService;
 import CinemaRoomRestService.RestService.domain.entity.Seat;
 import CinemaRoomRestService.RestService.domain.entity.TokenOfSeat;
@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CinemaRoomController {
     BookingService bookingService;
-    Mapper mapper = new Mapper();
+    @Autowired
+    SeatMapper mapper;
 
     @Autowired
     public CinemaRoomController(BookingService bookingService) {

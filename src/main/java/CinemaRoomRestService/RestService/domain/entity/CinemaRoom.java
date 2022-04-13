@@ -2,21 +2,22 @@ package CinemaRoomRestService.RestService.domain.entity;
 
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class CinemaRoom {
     private final int TOTAL_ROWS = 9;
     private final int TOTAL_COLUMNS = 9;
-    private final Seat[] ALL_SEATS = new Seat[TOTAL_COLUMNS * TOTAL_ROWS];
-    private CopyOnWriteArrayList<TokenOfSeat> activeTickets = new CopyOnWriteArrayList<>();
-    public Statistics stat = new Statistics(getAllSeats().length);
+    private final List<Seat> ALL_SEATS = Arrays.asList(new Seat[TOTAL_COLUMNS * TOTAL_ROWS]);
+    private List<TokenOfSeat> activeTickets = new ArrayList<>();
 
     public CinemaRoom() {
         int counter = 0;
-        for (int i = 1; i < 10; i++) {
-            for (int j = 1; j < 10; j++) {
-                ALL_SEATS[counter++] = new Seat(i, j);
+        for (int i = 1; i < TOTAL_ROWS + 1; i++) {
+            for (int j = 1; j < TOTAL_COLUMNS + 1; j++) {
+                ALL_SEATS.set(counter++, new Seat(i, j));
             }
         }
     }
@@ -33,11 +34,11 @@ public class CinemaRoom {
         return TOTAL_COLUMNS;
     }
 
-    public Seat[] getAllSeats() {
+    public List<Seat> getAllSeats() {
         return ALL_SEATS;
     }
 
-    public CopyOnWriteArrayList<TokenOfSeat> getActiveTickets() {
+    public List<TokenOfSeat> getActiveTickets() {
         return activeTickets;
     }
 }

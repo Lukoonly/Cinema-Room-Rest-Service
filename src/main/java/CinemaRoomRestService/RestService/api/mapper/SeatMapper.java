@@ -6,28 +6,29 @@ import CinemaRoomRestService.RestService.domain.entity.TokenOfSeat;
 import CinemaRoomRestService.RestService.api.dto.CinemaRoomDTO;
 import CinemaRoomRestService.RestService.api.dto.SeatDTO;
 import CinemaRoomRestService.RestService.api.dto.TokenOfSeatDTO;
+import org.springframework.stereotype.Component;
 
-public class Mapper {
+@Component
+public class SeatMapper {
 
     public CinemaRoomDTO toCinemaRoomDTO(CinemaRoom cinemaRoom) {
-        CinemaRoomDTO cinemaRoomDTO = new CinemaRoomDTO();
-        cinemaRoomDTO.setAllSeats(cinemaRoom.getAllSeats());
-        return cinemaRoomDTO;
+        return new CinemaRoomDTO.Builder()
+                .withAllSeat(cinemaRoom.getAllSeats())
+                .build();
     }
 
     public TokenOfSeatDTO toTokenOfSeatDTO(TokenOfSeat tokenOfSeat) {
-        SeatDTO seatDTO = toSeatDTO(tokenOfSeat.getTicket());
-        TokenOfSeatDTO tokenOfSeatDTO = new TokenOfSeatDTO();
-        tokenOfSeatDTO.setToken(tokenOfSeat.getToken());
-        tokenOfSeatDTO.setTicket(seatDTO);
-        return tokenOfSeatDTO;
+        return new TokenOfSeatDTO.Builder()
+                .withToken(tokenOfSeat.getToken())
+                .withTicket(toSeatDTO(tokenOfSeat.getTicket()))
+                .build();
     }
 
     public SeatDTO toSeatDTO(Seat seat) {
-        SeatDTO seatDTO = new SeatDTO();
-        seatDTO.setColumn(seat.getColumn());
-        seatDTO.setRow(seat.getRow());
-        seatDTO.setPrice(seat.getPrice());
-        return seatDTO;
+        return new SeatDTO.Builder()
+                .withRow(seat.getRow())
+                .withColumn(seat.getColumn())
+                .withPrice(seat.getPrice())
+                .build();
     }
 }

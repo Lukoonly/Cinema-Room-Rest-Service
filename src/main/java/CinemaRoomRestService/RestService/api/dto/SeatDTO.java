@@ -9,23 +9,38 @@ public class SeatDTO {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getColumn() {
         return column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public static class Builder {
+        private SeatDTO seatDTO;
+
+        public Builder() {
+            this.seatDTO = new SeatDTO();
+        }
+
+        public Builder withRow(int row) {
+            seatDTO.row = row;
+            return this;
+        }
+
+        public Builder withColumn(int column) {
+            seatDTO.column = column;
+            return this;
+        }
+
+        public Builder withPrice(int price) {
+            seatDTO.price = price;
+            return this;
+        }
+
+        public SeatDTO build() {
+            return seatDTO;
+        }
     }
 }

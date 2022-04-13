@@ -8,15 +8,29 @@ public class TokenOfSeatDTO {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public SeatDTO getTicket() {
         return ticket;
     }
 
-    public void setTicket(SeatDTO ticket) {
-        this.ticket = ticket;
+    public static class Builder {
+        private TokenOfSeatDTO tokenOfSeatDTO;
+
+        public Builder() {
+            tokenOfSeatDTO = new TokenOfSeatDTO();
+        }
+
+        public Builder withToken(String token) {
+            tokenOfSeatDTO.token = token;
+            return this;
+        }
+
+        public Builder withTicket(SeatDTO ticket) {
+            tokenOfSeatDTO.ticket = ticket;
+            return this;
+        }
+
+        public TokenOfSeatDTO build() {
+            return tokenOfSeatDTO;
+        }
     }
 }

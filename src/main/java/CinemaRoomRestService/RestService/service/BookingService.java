@@ -35,7 +35,8 @@ public class BookingService {
                 if (!seat.isFree) {
                     throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_TICKET.toString());
                 }
-                tokenOfSeat = new TokenOfSeat(cinemaRoom.stat.addTicket(seat));
+                seat.isFree = false;
+                tokenOfSeat = new TokenOfSeat(seat);
                 cinemaRoom.getActiveTickets().add(tokenOfSeat);
             }
         }
@@ -48,8 +49,7 @@ public class BookingService {
             for (TokenOfSeat tokenOfSeat : cinemaRoom.getActiveTickets()) {
                 if (tokenOfSeat.getToken().equals(reqToken.getToken())) {
                     seat = tokenOfSeat.getTicket();
-                    cinemaRoom.stat.subTicket(seat);
-                    cinemaRoom.getActiveTickets().remove(tokenOfSeat);
+                    seat.isFree = true;
                 }
             }
         } else {
@@ -60,7 +60,7 @@ public class BookingService {
 
     public Statistics getStatistics(String password) {
         if (password != null && password.equals("super_secret")) {
-            return cinemaRoom.stat;
+            return new Statistics(cinemaRoom.getAllSeats());
         } else {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD.toString());
         }
