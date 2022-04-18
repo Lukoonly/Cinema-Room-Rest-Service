@@ -1,6 +1,6 @@
 package CinemaRoomRestService.RestService.api.controller;
 
-import CinemaRoomRestService.RestService.domain.entity.Statistics;
+import CinemaRoomRestService.RestService.api.dto.StatisticsDTO;
 import CinemaRoomRestService.RestService.api.dto.CinemaRoomDTO;
 import CinemaRoomRestService.RestService.api.dto.SeatDTO;
 import CinemaRoomRestService.RestService.api.dto.TokenOfSeatDTO;
@@ -41,7 +41,7 @@ public class CinemaRoomController {
 
     @PostMapping("/stats")
     public @ResponseBody
-    Statistics getStatistics(@RequestParam(required = false) String password) {
-        return bookingService.getStatistics(password);
+    StatisticsDTO getStatistics(@RequestParam(required = false) String password) {
+        return mapper.toStatisticsDTO(bookingService.getStatistics(password));
     }
 }

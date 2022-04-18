@@ -1,9 +1,11 @@
 package CinemaRoomRestService.RestService.domain.entity;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+@Getter
 public class Statistics {
     private int currentIncome;
     private int availableSeats;
@@ -19,17 +21,5 @@ public class Statistics {
                 currentIncome += current.getPrice();
             }
         }
-    }
-
-    public int getCurrentIncome() {
-        return currentIncome;
-    }
-
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
-    public int getPurchasedTickets() {
-        return purchasedTickets;
     }
 }

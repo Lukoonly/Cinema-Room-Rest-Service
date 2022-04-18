@@ -4,21 +4,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class BadRequestException extends RuntimeException {
+public class SeatOutOfBoundsException extends RuntimeException {
     private String message;
 
-    public BadRequestException() {
-    }
-
-    public BadRequestException(String message) {
+    public SeatOutOfBoundsException(String message) {
         this.message = message;
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
