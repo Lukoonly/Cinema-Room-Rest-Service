@@ -9,12 +9,12 @@ public class Seat {
     private final int column;
     @Getter
     private final int price;
-    public boolean isFree;
+    public boolean isOccupied;
 
     public Seat(int row, int column) {
         this.row = row;
         this.column = column;
         this.price = row <= 4 ? 10 : 8;
-        this.isFree = true;
+        this.isOccupied = false;
     }
 }

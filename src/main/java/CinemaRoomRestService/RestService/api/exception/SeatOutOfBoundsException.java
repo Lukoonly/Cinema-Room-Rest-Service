@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class SeatOutOfBoundsException extends RuntimeException {
-    private String message;
+    private final String message;
 
     public SeatOutOfBoundsException(String message) {
         this.message = message;

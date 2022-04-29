@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CinemaRoomController {
-    BookingService bookingService;
+    private final BookingService bookingService;
     @Autowired
-    SeatMapper mapper;
+    SeatMapper seatMapper;
 
     @Autowired
     public CinemaRoomController(BookingService bookingService) {
@@ -24,24 +24,24 @@ public class CinemaRoomController {
 
     @GetMapping("/seats")
     public CinemaRoomDTO getSeatInfo() {
-        return mapper.toCinemaRoomDTO(bookingService.getSeatInfo());
+        return seatMapper.toCinemaRoomDTO(bookingService.getSeatInfo());
     }
 
     @PostMapping("/purchase")
     public @ResponseBody
     TokenOfSeatDTO bookingOfSeat(@RequestBody Seat reqSeat) {
-        return mapper.toTokenOfSeatDTO(bookingService.bookingOfSeat(reqSeat));
+        return seatMapper.toTokenOfSeatDTO(bookingService.bookingOfSeat(reqSeat));
     }
 
     @PostMapping("/return")
     public @ResponseBody
     SeatDTO returnOfSeat(@RequestBody TokenOfSeat reqToken) {
-        return mapper.toSeatDTO(bookingService.returnOfSeat(reqToken));
+        return seatMapper.toSeatDTO(bookingService.returnOfSeat(reqToken));
     }
 
     @PostMapping("/stats")
     public @ResponseBody
     StatisticsDTO getStatistics(@RequestParam(required = false) String password) {
-        return mapper.toStatisticsDTO(bookingService.getStatistics(password));
+        return seatMapper.toStatisticsDTO(bookingService.getStatistics(password));
     }
 }

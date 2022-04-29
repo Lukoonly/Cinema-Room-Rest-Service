@@ -22,43 +22,58 @@ public class BookingService {
         return cinemaRoom;
     }
 
+    private Seat getSeatAfterBooking(TokenOfSeat tokenOfSeat) {
+        Seat seat = tokenOfSeat.getTicket();
+        seat.isOccupied = false;
+        return seat;
+    }
+
+    private TokenOfSeat getSeatAfterReturning(Seat seat) {
+        seat.isOccupied = true;
+        return new TokenOfSeat(seat);
+    }
+
     public TokenOfSeat bookingOfSeat(Seat seat) {
-        TokenOfSeat tokenOfSeat = null;
         if (seat.getRow() > cinemaRoom.getTotalRows() || seat.getColumn() > cinemaRoom.getTotalColumns()
                 || seat.getRow() < 1 || seat.getColumn() < 1) {
             throw new SeatOutOfBoundsException(ErrorMessage.OUT_OF_BOUNDS.toString());
         }
-        for (Seat currentSeat : cinemaRoom.getAllSeats()) {
-            if (seat.getRow() == currentSeat.getRow() && seat.getColumn() == currentSeat.getColumn()) {
-                if (!currentSeat.isFree) {
-                    throw new SeatOutOfBoundsException(ErrorMessage.NOT_AVAILABLE_TICKET.toString());
-                }
-                currentSeat.isFree = false;
-                tokenOfSeat = new TokenOfSeat(currentSeat);
-                cinemaRoom.getActiveTickets().add(tokenOfSeat);
-            }
-        }
+        TokenOfSeat tokenOfSeat = cinemaRoom.getAllSeats().stream()
+                .filter(currentSeat -> seat.getRow() == currentSeat.getRow()
+                        && seat.getColumn() == currentSeat.getColumn())
+                .filter(currentSeat -> !currentSeat.isOccupied)
+                .findFirst()
+                .map(this::getSeatAfterReturning)
+                .orElseThrow(() -> new SeatOutOfBoundsException(ErrorMessage.NOT_AVAILABLE_TICKET.toString()));
+        cinemaRoom.getActiveTickets().add(tokenOfSeat);
         return tokenOfSeat;
     }
 
-    public Seat returnOfSeat(TokenOfSeat reqToken) {
-        Seat seat = null;
-        if (cinemaRoom.isContainToken(reqToken.getToken())) {
-            for (TokenOfSeat tokenOfSeat : cinemaRoom.getActiveTickets()) {
-                if (tokenOfSeat.getToken().equals(reqToken.getToken())) {
-                    seat = tokenOfSeat.getTicket();
-                    seat.isFree = true;
-                }
-            }
-        } else {
-            throw new SeatOutOfBoundsException(ErrorMessage.WRONG_TOKEN.toString());
-        }
-        return seat;
+    public Seat returnOfSeat(TokenOfSeat clientTicket) {
+        return cinemaRoom.getActiveTickets().stream()
+                .filter((token) -> clientTicket.getToken().equals(token.getToken())) // возвращает отфильтрованій список
+                .findFirst() // возвращает первій елемент которій совпал с условием
+                .map(this::getSeatAfterBooking)
+                .orElseThrow(() -> new SeatOutOfBoundsException(ErrorMessage.WRONG_TOKEN.toString()));
+
+        //---------------------------------------------------------------------------------
+
+//        if (cinemaRoom.isContainToken(clientTicket.getToken())) {
+//            for (TokenOfSeat tokenOfSeat : cinemaRoom.getActiveTickets()) {
+//                if (tokenOfSeat.getToken().equals(clientTicket.getToken())) {
+//                    seat = tokenOfSeat.getTicket();
+//                    seat.isOccupied = false;
+//                }
+//            }
+//              } else {
+//            throw new SeatOutOfBoundsException(ErrorMessage.WRONG_TOKEN.toString());
+//        }
+//        //---------------------------------------------------------------------------------
     }
 
     public Statistics getStatistics(String password) {
         if (password != null && password.equals("super_secret")) {
-            return new Statistics(cinemaRoom.getAllSeats());
+            return Statistics.getInstance(cinemaRoom.getAllSeats());
         } else {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD.toString());
         }
