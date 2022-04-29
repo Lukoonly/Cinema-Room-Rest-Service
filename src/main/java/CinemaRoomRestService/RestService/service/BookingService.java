@@ -51,24 +51,10 @@ public class BookingService {
 
     public Seat returnOfSeat(TokenOfSeat clientTicket) {
         return cinemaRoom.getActiveTickets().stream()
-                .filter((token) -> clientTicket.getToken().equals(token.getToken())) // возвращает отфильтрованій список
-                .findFirst() // возвращает первій елемент которій совпал с условием
+                .filter((token) -> clientTicket.getToken().equals(token.getToken()))
+                .findFirst()
                 .map(this::getSeatAfterBooking)
                 .orElseThrow(() -> new SeatOutOfBoundsException(ErrorMessage.WRONG_TOKEN.toString()));
-
-        //---------------------------------------------------------------------------------
-
-//        if (cinemaRoom.isContainToken(clientTicket.getToken())) {
-//            for (TokenOfSeat tokenOfSeat : cinemaRoom.getActiveTickets()) {
-//                if (tokenOfSeat.getToken().equals(clientTicket.getToken())) {
-//                    seat = tokenOfSeat.getTicket();
-//                    seat.isOccupied = false;
-//                }
-//            }
-//              } else {
-//            throw new SeatOutOfBoundsException(ErrorMessage.WRONG_TOKEN.toString());
-//        }
-//        //---------------------------------------------------------------------------------
     }
 
     public Statistics getStatistics(String password) {

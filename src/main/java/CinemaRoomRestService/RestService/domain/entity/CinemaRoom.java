@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Component
 @Getter
@@ -23,17 +22,5 @@ public class CinemaRoom {
                 allSeats.set(counter++, new Seat(i, j));
             }
         }
-    }
-
-    public boolean isContainToken(String token) {
-     // return   activeTickets.stream().anyMatch(element -> element.getToken().equals(token));
-
-
-        for(TokenOfSeat tokenOfSeat : activeTickets){
-            if (tokenOfSeat.equals(token)){
-                return true;
-            }
-        }
-        return false;
     }
 }
