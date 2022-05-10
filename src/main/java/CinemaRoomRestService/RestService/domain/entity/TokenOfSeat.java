@@ -13,6 +13,6 @@ public class TokenOfSeat {
 
     public TokenOfSeat(Seat seat) {
         this.ticket = seat;
-        this.token = String.valueOf(UUID.randomUUID());
+        this.token = UUID.randomUUID().toString();
     }
 }

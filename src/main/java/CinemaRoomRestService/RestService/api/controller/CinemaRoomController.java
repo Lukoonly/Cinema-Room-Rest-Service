@@ -2,7 +2,6 @@ package CinemaRoomRestService.RestService.api.controller;
 
 import CinemaRoomRestService.RestService.api.dto.StatisticsDTO;
 import CinemaRoomRestService.RestService.api.dto.CinemaRoomDTO;
-import CinemaRoomRestService.RestService.api.dto.SeatDTO;
 import CinemaRoomRestService.RestService.api.dto.TokenOfSeatDTO;
 import CinemaRoomRestService.RestService.api.mapper.SeatMapper;
 import CinemaRoomRestService.RestService.service.BookingService;
@@ -35,7 +34,7 @@ public class CinemaRoomController {
 
     @PostMapping("/return")
     public @ResponseBody
-    SeatDTO returnOfSeat(@RequestBody TokenOfSeat reqToken) {
+    CinemaRoomRestService.RestService.api.dto.SeatDTO returnOfSeat(@RequestBody TokenOfSeat reqToken) {
         return seatMapper.toSeatDTO(bookingService.returnOfSeat(reqToken));
     }
 

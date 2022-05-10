@@ -1,22 +1,25 @@
 package CinemaRoomRestService.RestService.api.mapper;
 
+import CinemaRoomRestService.RestService.api.dto.SeatDTO;
 import CinemaRoomRestService.RestService.api.dto.StatisticsDTO;
 import CinemaRoomRestService.RestService.domain.entity.CinemaRoom;
 import CinemaRoomRestService.RestService.domain.entity.Seat;
 import CinemaRoomRestService.RestService.domain.entity.Statistics;
 import CinemaRoomRestService.RestService.domain.entity.TokenOfSeat;
 import CinemaRoomRestService.RestService.api.dto.CinemaRoomDTO;
-import CinemaRoomRestService.RestService.api.dto.SeatDTO;
 import CinemaRoomRestService.RestService.api.dto.TokenOfSeatDTO;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class SeatMapper {
 
     public CinemaRoomDTO toCinemaRoomDTO(CinemaRoom cinemaRoom) {
-        return CinemaRoomDTO
-                .builder()
-                .allSeats(cinemaRoom.getAllSeats())
+        return CinemaRoomDTO.builder()
+                .allSeats(cinemaRoom.getAllSeats().stream()
+                        .map(this::toSeatDTO)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -36,8 +39,7 @@ public class SeatMapper {
     }
 
     public StatisticsDTO toStatisticsDTO(Statistics statistics) {
-        return StatisticsDTO
-                .builder()
+        return StatisticsDTO.builder()
                 .availableSeats(statistics.getAvailableSeats())
                 .currentIncome(statistics.getCurrentIncome())
                 .purchasedTickets(statistics.getPurchasedTickets())

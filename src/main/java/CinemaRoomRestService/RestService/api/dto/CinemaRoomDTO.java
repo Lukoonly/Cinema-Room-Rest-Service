@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 @Getter
 public class CinemaRoomDTO {
-    private List<Seat> allSeats;
+    private List<SeatDTO> allSeats;
 }
