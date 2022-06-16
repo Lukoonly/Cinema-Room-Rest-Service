@@ -1,6 +1,5 @@
 package CinemaRoomRestService.RestService.api.dto;
 
-import CinemaRoomRestService.RestService.domain.entity.Seat;
 import lombok.Builder;
 import lombok.Getter;
 

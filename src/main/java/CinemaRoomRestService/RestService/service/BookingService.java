@@ -37,7 +37,7 @@ public class BookingService {
     }
 
     private boolean isSeatExists(Seat seat) {
-        return seat.getRow() < cinemaRoom.getTotalRows() || seat.getColumn() < cinemaRoom.getTotalColumns()
+        return seat.getRow() < cinemaRoom.getTOTAL_ROWS() || seat.getColumn() < cinemaRoom.getTOTAL_COLUMNS()
                 || seat.getRow() > 1 || seat.getColumn() > 1;
     }
 

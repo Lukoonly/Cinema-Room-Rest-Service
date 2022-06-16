@@ -1,15 +1,19 @@
 package CinemaRoomRestService.RestService.domain.entity;
 
 import lombok.Getter;
-
 import java.util.List;
 
 @Getter
 public class Statistics {
+
     private static Statistics instance;
     private int currentIncome;
     private int availableSeats;
     private int purchasedTickets;
+
+    public void setInstance(Statistics instance) {
+        Statistics.instance = instance;
+    }
 
 
     public static Statistics getInstance(List<Seat> seats) {

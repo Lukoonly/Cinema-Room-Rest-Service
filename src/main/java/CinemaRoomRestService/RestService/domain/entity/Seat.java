@@ -3,6 +3,7 @@ package CinemaRoomRestService.RestService.domain.entity;
 import lombok.Getter;
 
 public class Seat {
+
     @Getter
     private final int row;
     @Getter
